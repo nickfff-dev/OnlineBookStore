@@ -15,7 +15,7 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     zipCode = Column(String(128), nullable=True)
     street = Column(String(128), nullable=True)
-    
+
     def __init__(self, *args, **kwargs):
         """Initializes a user"""
         super().__init__(*args, **kwargs)
