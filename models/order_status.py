@@ -25,8 +25,6 @@ class OrderStatus(BaseModel, Base):
                         primary_key=True, nullable=False)
     status = Column(Enum(OrderStatusType), nullable=False,
                     default=OrderStatusType.pending, primary_key=True)
-    order = relationship('Order', backref='status',
-                         cascade='all, delete, delete-orphan')
     is_current = Column(Boolean, nullable=False, default=True)
 
     def __init__(self, *args, **kwargs):

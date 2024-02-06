@@ -48,10 +48,10 @@ def delete_category(category_id):
 @app_views.route('/categories', methods=['POST'], strict_slashes=False)
 def post_category():
     """ Creates a Category """
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
-    if 'name' not in request.json:
+    if 'name' not in request.get_json():
         abort(400, description='Missing name')
 
     data = request.get_json()
@@ -70,7 +70,7 @@ def put_category(category_id):
     if category is None:
         abort(404)
 
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
     data = request.get_json()

@@ -46,10 +46,10 @@ def delete_author(author_id):
 @app_views.route('/authors', methods=['POST'], strict_slashes=False)
 def post_author():
     """ Creates an Author """
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
-    if 'name' not in request.json:
+    if 'name' not in request.get_json():
         abort(400, description='Missing name')
 
     data = request.get_json()

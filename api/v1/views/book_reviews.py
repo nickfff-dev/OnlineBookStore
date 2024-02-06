@@ -46,16 +46,16 @@ def get_review(book_id, review_id):
                  strict_slashes=False)
 def post_review(book_id):
     """ Creates a Review """
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
-    if 'user_id' not in request.json:
+    if 'user_id' not in request.get_json():
         abort(400, description='Missing user_id')
 
-    if 'text' not in request.json:
+    if 'text' not in request.get_json():
         abort(400, description='Missing content')
 
-    user = storage.get(User, request.json['user_id'])
+    user = storage.get(User, request.get_json()['user_id'])
 
     if user is None:
         abort(404)
@@ -82,7 +82,7 @@ def put_review(review_id):
     if review is None:
         abort(404)
 
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
     data = request.get_json()

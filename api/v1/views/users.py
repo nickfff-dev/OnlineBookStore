@@ -45,23 +45,13 @@ def delete_user(user_id):
 @app_views.route('/users', methods=['POST'], strict_slashes=False)
 def post_user():
     """ Creates a User """
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
-    if 'email' not in request.json:
-        abort(400, description='Missing email')
-
-    if 'password' not in request.json:
-        abort(400, description='Missing password')
-
-    if 'firstName' not in request.json:
-        abort(400, description='Missing firstName')
-
-    if 'lastName' not in request.json:
-        abort(400, description='Missing lastName')
-
-    if 'email' not in request.json:
-        abort(400, description='Missing email')
+    props = ['email', 'password', 'firstName', 'lastName']
+    for prop in props:
+        if prop not in request.get_json():
+            abort(400, description='Missing ' + prop)
 
     data = request.get_json()
     user = User(**data)
@@ -78,7 +68,7 @@ def put_user(user_id):
     if user is None:
         abort(404)
 
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
     data = request.get_json()

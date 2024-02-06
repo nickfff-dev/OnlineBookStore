@@ -41,10 +41,10 @@ class Order(BaseModel, Base):
     total = Column(Float,  Computed(query), nullable=False)
     user_id = Column(String(128), ForeignKey('users.id'),
                      primary_key=True, nullable=False)
-    user = relationship('User', backref='orders',
-                        cascade='all, delete, delete-orphan')
     books = relationship('Book', secondary='orderLine',
                          backref='orders', viewonly=False)
+    status = relationship('OrderStatus', backref='order',
+                          cascade='all, delete, delete-orphan')
 
     def __init__(self, *args, **kwargs):
         """Initializes a user"""

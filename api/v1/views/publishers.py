@@ -47,10 +47,10 @@ def delete_publisher(publisher_id):
 @app_views.route('/publishers', methods=['POST'], strict_slashes=False)
 def post_publisher():
     """ Creates a Publisher """
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
-    if 'name' not in request.json:
+    if 'name' not in request.get_json():
         abort(400, description='Missing name')
 
     data = request.get_json()
@@ -69,7 +69,7 @@ def put_publisher(publisher_id):
     if publisher is None:
         abort(404)
 
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
     data = request.get_json()

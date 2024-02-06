@@ -90,13 +90,13 @@ def delete_order(order_id):
 @app_views.route('/orders', methods=['POST'], strict_slashes=False)
 def post_order():
     """ Creates a Order"""
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
-    if 'user_id' not in request.json:
+    if 'user_id' not in request.get_json():
         abort(400, description='Missing user_id')
 
-    if 'order_date' not in request.json:
+    if 'order_date' not in request.get_json():
         abort(400, description='Missing order_date')
 
     data = request.get_json()
@@ -123,7 +123,7 @@ def put_order(order_id):
     if order is None:
         abort(404)
 
-    if not request.json:
+    if not request.get_json():
         abort(400, description='Not a JSON')
 
     data = request.get_json()

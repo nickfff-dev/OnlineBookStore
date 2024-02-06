@@ -18,8 +18,6 @@ class Book(BaseModel, Base):
     discount = Column(Float, nullable=False, default=0.0)
     publisher_id = Column(String(60), String, ForeignKey('publishers.id'),
                           nullable=False)
-    publisher = relationship('Publisher', backref='books',
-                             cascade='all, delete, delete-orphan')
     reviews = relationship('Review', backref='book',
                            cascade='all, delete, delete-orphan')
 
