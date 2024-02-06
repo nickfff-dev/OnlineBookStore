@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """This module defines a class Book"""
-import models
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from sqlalchemy import Table
 
 
 class Book(BaseModel, Base):
@@ -22,6 +20,8 @@ class Book(BaseModel, Base):
                           nullable=False)
     publisher = relationship('Publisher', backref='books',
                              cascade='all, delete, delete-orphan')
+    reviews = relationship('Review', backref='book',
+                           cascade='all, delete, delete-orphan')
 
     def __init__(self, *args, **kwargs):
         """Initializes a book"""

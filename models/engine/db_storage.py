@@ -10,9 +10,9 @@ from models.category import Category
 from models.order import Order
 from models.order_status import OrderStatus
 from models.publisher import Publisher
+from models.review import Review
 from models.user import User
 from os import getenv
-import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -24,7 +24,8 @@ classes = {
     'Publisher': Publisher,
     'Order': Order,
     'OrderStatus': OrderStatus,
-    'Author': Author
+    'Author': Author,
+    'Review': Review
 }
 
 

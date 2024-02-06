@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class OrderStatus"""
-import models
 import enum
-from sqlalchemy import Column, String, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, String, DateTime, ForeignKey, Enum, Boolean
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 
@@ -25,9 +24,10 @@ class OrderStatus(BaseModel, Base):
     order_date = Column(DateTime, ForeignKey('orders.order_date'),
                         primary_key=True, nullable=False)
     status = Column(Enum(OrderStatusType), nullable=False,
-                    default=OrderStatusType.pending)
+                    default=OrderStatusType.pending, primary_key=True)
     order = relationship('Order', backref='status',
                          cascade='all, delete, delete-orphan')
+    is_current = Column(Boolean, nullable=False, default=True)
 
     def __init__(self, *args, **kwargs):
         """Initializes a user"""

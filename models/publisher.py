@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class Publisher"""
-import models
 from sqlalchemy import Column, String
 from models.base_model import BaseModel, Base
-from sqlalchemy.orm import relationship
 
 
 class Publisher(BaseModel, Base):

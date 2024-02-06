@@ -1,0 +1,183 @@
+#!/usr/bin/python3
+""" Module for books api that
+handles RestFul API actions that involve books """
+from api.v1.views import app_views
+from flask import abort, jsonify, make_response, request
+from models.book import Book
+from models.publisher import Publisher
+from models.author import Author
+from models.category import Category
+from models import storage
+
+
+@app_views.route('/books', methods=['GET'],
+                 strict_slashes=False)
+def get_books():
+    """ Retrieves the list of all Book objects """
+
+    books = storage.all(Book).values()
+    books = [book.to_dict() for book in books]
+
+    return jsonify(books)
+
+
+@app_views.route('/books/<book_id>', methods=['GET'],
+                 strict_slashes=False)
+def get_book(book_id):
+    """ Retrieves a Book object """
+
+    book = storage.get(Book, book_id)
+
+    if book is None:
+        abort(404)
+    return jsonify(book.to_dict())
+
+
+@app_views.route('/books/<book_id>', methods=['DELETE'],
+                 strict_slashes=False)
+def delete_book(book_id):
+    """ Deletes a Book object """
+
+    book = storage.get(Book, book_id)
+
+    if book is None:
+        abort(404)
+
+    storage.delete(book)
+    storage.save()
+    return make_response(jsonify({}), 200)
+
+
+@app_views.route('/books', methods=['POST'],
+                 strict_slashes=False)
+def post_book():
+    """ Creates a Book """
+    if not request.get_json():
+        abort(400, description='Not a JSON')
+
+    if 'title' not in request.get_json():
+        abort(400, description='Missing title')
+
+    if 'description' not in request.get_json():
+        abort(400, description='Missing description')
+
+    if 'image' not in request.get_json():
+        abort(400, description='Missing image')
+
+    if 'isbn' not in request.get_json():
+        abort(400, description='Missing isbn')
+
+    if 'price' not in request.get_json():
+        abort(400, description='Missing price')
+
+    if 'unitsInStock' not in request.get_json():
+        abort(400, description='Missing unitsInStock')
+
+    data = request.get_json()
+    result = create_book_data(data)
+    if result.get('error', None) is not None:
+        abort(400, description=result['error'])
+    book_data = result
+    new_book = Book(**book_data)
+    new_book.save()
+    return make_response(jsonify(new_book.to_dict()), 201)
+
+
+@app_views.route('/books/<book_id>', methods=['PUT'],
+                 strict_slashes=False)
+def put_book(book_id):
+    """ Updates a Book object """
+    if not request.get_json():
+        abort(400, description='Not a JSON')
+
+    book = storage.get(Book, book_id)
+
+    if book is None:
+        abort(404)
+
+    data = request.get_json()
+    ignore = ['id', 'created_at', 'updated_at']
+    for key, value in data.items():
+        if key not in ignore:
+            setattr(book, key, value)
+    storage.save()
+    return make_response(jsonify(book.to_dict()), 200)
+
+
+def create_book_data(data):
+    """
+    function to create book data from request data
+    data contains another key 'publisher' that has keys 'id'
+    and optionally 'name' if 'name' is present,
+    we need to create a new publisher
+    if 'name' is not present, we need to find the publisher by 'id'
+    data also contains another key 'authors'
+    that has an array of objects with keys 'id' and optionally 'name'
+    we need to iterate through the array and create new authors
+    if 'name' is present and store the 'id' in an array
+    if 'name' is not present, we need to append the 'id' to the array
+    same for categories """
+
+    publisher_id = ""
+    author_ids = []
+    category_ids = []
+    publisher = data.get('publisher')
+    if publisher is None:
+        return {'error': 'Missing publisher'}
+
+    if publisher.get('id', None) is not None:
+        publisher_id = publisher['id']
+    else:
+        if publisher.get('name', None) is None:
+            return {'error': 'Missing publisher name'}
+        publisher_name = publisher['name']
+        new_publisher = Publisher(name=publisher_name)
+        new_publisher.save()
+        publisher_id = new_publisher.id
+
+    authors = data.get('authors', [])
+    if len(authors) == 0:
+        return {'error': 'Missing authors'}
+    categories = data.get('categories', [])
+    if len(categories) == 0:
+        return {'error': 'Missing categories'}
+
+    for author in authors:
+        if author.get('id', None) is not None:
+            author_ids.append(author['id'])
+        else:
+            if author.get('name', None) is None:
+                continue
+            new_author = Author(name=author['name'])
+            new_author.save()
+            author_ids.append(new_author.id)
+
+    for category in categories:
+        if category.get('id', None) is not None:
+            category_ids.append(category['id'])
+        else:
+            if category.get('name', None) is None:
+                continue
+            new_category = Category(name=category['name'])
+            new_category.save()
+            category_ids.append(new_category.id)
+
+    if len(author_ids) == 0:
+        return {'error': 'No valid authors'}
+
+    if len(category_ids) == 0:
+        return {'error': 'No valid categories'}
+
+    book_data = {
+        'title': data['title'],
+        'description': data['description'],
+        'image': data['image'],
+        'isbn': data['isbn'],
+        'price': data['price'],
+        'unitsInStock': data['unitsInStock'],
+        'publisher_id': publisher_id,
+        'authors': author_ids,
+        'categories': category_ids
+    }
+
+    return book_data
