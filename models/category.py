@@ -8,9 +8,9 @@ from sqlalchemy.orm import relationship
 category_book = Table(
     'category_book',
     Base.metadata,
-    Column('category_id', String, ForeignKey('categories.id'),
+    Column('category_id', String(60), ForeignKey('categories.id'),
            primary_key=True),
-    Column('book_id', String, ForeignKey('books.id'),
+    Column('book_id', String(60), ForeignKey('books.id'),
            primary_key=True),
 )
 

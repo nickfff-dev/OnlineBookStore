@@ -8,8 +8,9 @@ from sqlalchemy.orm import relationship
 author_book = Table(
     'author_book',
     Base.metadata,
-    Column('author_id', String, ForeignKey('authors.id'), primary_key=True),
-    Column('book_id', String, ForeignKey('books.id'), primary_key=True)
+    Column('author_id', String(60), ForeignKey('authors.id'),
+           primary_key=True),
+    Column('book_id', String(60), ForeignKey('books.id'), primary_key=True)
 )
 
 

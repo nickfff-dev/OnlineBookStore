@@ -11,43 +11,13 @@ from models import storage
 def updateOrderStatus(order, status):
     """ Updates the status of an order """
 
-    # we need to first fetch the current status and set is_current to False
-    # then create a new status with is_current set to True
-    all_statuses = storage.all(OrderStatus).values()
-    order_statuses = [status for status in all_statuses
-                      if status.order_id == order.id and
-                      status.order_date == order.order_date]
-    for item in order_statuses:
-        item.is_current = False
-        storage.save()
-
-    if status == 'cancelled':
-        order_status = OrderStatus(order_id=order.id,
-                                   order_date=order.order_date,
-                                   status=OrderStatusType.cancelled,
-                                   is_current=True)
-    if status == 'paid':
-        order_status = OrderStatus(order_id=order.id,
-                                   order_date=order.order_date,
-                                   status=OrderStatusType.paid,
-                                   is_current=True)
-    if status == 'shipped':
-        order_status = OrderStatus(order_id=order.id,
-                                   order_date=order.order_date,
-                                   status=OrderStatusType.shipped,
-                                   is_current=True)
-    if status == 'delivered':
-        order_status = OrderStatus(order_id=order.id,
-                                   order_date=order.order_date,
-                                   status=OrderStatusType.delivered,
-                                   is_current=True)
-    if status == 'pending':
-        order_status = OrderStatus(order_id=order.id,
-                                   order_date=order.order_date,
-                                   status=OrderStatusType.pending,
-                                   is_current=True)
-
-    order_status.save()
+    order_data = storage.get(Order, order.id)
+    current_status = order_data.current_status()
+    current_status.is_current = False
+    storage.save()
+    # we create a new status and set it to true
+    new_status = OrderStatus(order_id=order.id, status=status, is_current=True)
+    new_status.save()
     return
 
 
@@ -105,7 +75,6 @@ def post_order():
 
     #  we need to create a new orderStatus object
     order_status = OrderStatus(order_id=order.id,
-                               order_date=order.order_date,
                                status=OrderStatusType.pending,
                                is_current=True)
     order_status.save()
@@ -131,10 +100,7 @@ def put_order(order_id):
     ignore = ['id', 'user_id', 'order_date']
     for key, value in data.items():
         if key not in ignore:
-            if key == 'status':
-                updateOrderStatus(order, value)
-            else:
-                setattr(order, key, value)
+            setattr(order, key, value)
 
     storage.save()
     return make_response(jsonify(order.to_dict()), 200)

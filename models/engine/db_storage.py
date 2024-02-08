@@ -3,15 +3,16 @@
 Contains the class DBStorage
 """
 import models
-from models.author import Author
 from models.base_model import Base
-from models.book import Book
 from models.category import Category
-from models.order import Order
-from models.order_status import OrderStatus
+from models.author import Author
 from models.publisher import Publisher
-from models.review import Review
 from models.user import User
+from models.book import Book
+from models.order import Order
+from models.order_line import OrderLine
+from models.order_status import OrderStatus
+from models.review import Review
 from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -23,9 +24,11 @@ classes = {
     'Category': Category,
     'Publisher': Publisher,
     'Order': Order,
-    'OrderStatus': OrderStatus,
     'Author': Author,
-    'Review': Review
+    'Review': Review,
+    'OrderLine': OrderLine,
+    'OrderStatus': OrderStatus
+
 }
 
 
