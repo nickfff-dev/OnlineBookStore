@@ -1,5 +1,6 @@
 -- preepares database for development
 DROP DATABASE IF EXISTS OnlineBookStore;
+DROP USER IF EXISTS 'storedbadmin'@'localhost';
 CREATE DATABASE IF NOT EXISTS OnlineBookStore;
 CREATE USER IF NOT EXISTS 'storedbadmin'@'localhost' IDENTIFIED BY 'bookdb-pwd-8732';
 GRANT ALL PRIVILEGES ON *.* TO 'storedbadmin'@'localhost';

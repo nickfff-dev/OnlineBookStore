@@ -73,13 +73,22 @@ def post_book():
     if 'unitsInStock' not in request.get_json():
         abort(400, description='Missing unitsInStock')
 
+    all_books = storage.all(Book).values()
+    existing_book = next(
+        (book for book in all_books if
+         book.isbn == request.get_json()['isbn']),
+        None)
+    if existing_book is not None:
+        existing_book_obj = storage.get(Book, existing_book.id)
+        return make_response(jsonify(existing_book_obj.to_dict()), 200)
+
     data = request.get_json()
-    result = create_book_data(data)
+    result = create_book(data)
+
     if result.get('error', None) is not None:
         abort(400, description=result['error'])
-    book_data = result
-    new_book = Book(**book_data)
-    new_book.save()
+
+    new_book = storage.get(Book, result['id'])
     return make_response(jsonify(new_book.to_dict()), 201)
 
 
@@ -91,7 +100,6 @@ def put_book(book_id):
         abort(400, description='Not a JSON')
 
     book = storage.get(Book, book_id)
-
     if book is None:
         abort(404)
 
@@ -104,11 +112,11 @@ def put_book(book_id):
     return make_response(jsonify(book.to_dict()), 200)
 
 
-def create_book_data(data):
+def create_book(data):
     """
     function to create book data from request data
     data contains another key 'publisher' that has keys 'id'
-    and optionally 'name' if 'name' is present,
+    and optionally 'name'. if 'name' is present,
     we need to create a new publisher
     if 'name' is not present, we need to find the publisher by 'id'
     data also contains another key 'authors'
@@ -118,66 +126,108 @@ def create_book_data(data):
     if 'name' is not present, we need to append the 'id' to the array
     same for categories """
 
-    publisher_id = ""
-    author_ids = []
-    category_ids = []
-    publisher = data.get('publisher')
-    if publisher is None:
-        return {'error': 'Missing publisher'}
-
-    if publisher.get('id', None) is not None:
-        publisher_id = publisher['id']
-    else:
-        if publisher.get('name', None) is None:
-            return {'error': 'Missing publisher name'}
-        publisher_name = publisher['name']
-        new_publisher = Publisher(name=publisher_name)
-        new_publisher.save()
-        publisher_id = new_publisher.id
-
-    authors = data.get('authors', [])
-    if len(authors) == 0:
-        return {'error': 'Missing authors'}
-    categories = data.get('categories', [])
-    if len(categories) == 0:
-        return {'error': 'Missing categories'}
-
-    for author in authors:
-        if author.get('id', None) is not None:
-            author_ids.append(author['id'])
-        else:
-            if author.get('name', None) is None:
-                continue
-            new_author = Author(name=author['name'])
-            new_author.save()
-            author_ids.append(new_author.id)
-
-    for category in categories:
-        if category.get('id', None) is not None:
-            category_ids.append(category['id'])
-        else:
-            if category.get('name', None) is None:
-                continue
-            new_category = Category(name=category['name'])
-            new_category.save()
-            category_ids.append(new_category.id)
-
-    if len(author_ids) == 0:
-        return {'error': 'No valid authors'}
-
-    if len(category_ids) == 0:
-        return {'error': 'No valid categories'}
-
+    # we need to create the book first
+    number_of_pages = data.get('numberOfPages', None)
+    if number_of_pages is not None:
+        number_of_pages = int(number_of_pages)
     book_data = {
         'title': data['title'],
         'description': data['description'],
         'image': data['image'],
         'isbn': data['isbn'],
-        'price': data['price'],
-        'unitsInStock': data['unitsInStock'],
-        'publisher_id': publisher_id,
-        'authors': author_ids,
-        'categories': category_ids
+        'price': float(data['price']),
+        'unitsInStock': int(data['unitsInStock']),
+        'edition': data.get('edition', None),
+        'publish_date': data.get('publish_date', None),
+        'numberOfPages': number_of_pages,
+        'discount': data.get('discount', 0.0)
     }
+    new_book = Book(**book_data)
+    new_book.save()
 
-    return book_data
+    publishers = data.get('publishers', [])
+    if len(publishers) == 0:
+        return {'error': 'Missing publishers'}
+
+    authors = data.get('authors', [])
+    if len(authors) == 0:
+        return {'error': 'Missing authors'}
+
+    categories = data.get('categories', [])
+    if len(categories) == 0:
+        return {'error': 'Missing categories'}
+
+    all_publishers = storage.all(Publisher).values()
+    for publisher in publishers:
+        if publisher.get('id', None) is not None:
+            publisher_to_add_book = storage.get(Publisher, publisher['id'])
+            publisher_to_add_book.books.append(new_book)
+            storage.save()
+        else:
+            if publisher.get('name', None) is None:
+                continue
+            publisher_name = publisher['name']
+            existing_publisher = next(
+                (pub for pub in all_publishers if pub.name == publisher_name),
+                None)
+            if existing_publisher is not None:
+                publisher_to_add_book = storage.get(Publisher,
+                                                    existing_publisher.id)
+                publisher_to_add_book.books.append(new_book)
+                storage.save()
+            else:
+                publisher_kw = {'name': publisher_name}
+                new_publisher = Publisher(**publisher_kw)
+                new_publisher.save()
+                new_publisher.books.append(new_book)
+                storage.save()
+
+    for author in authors:
+        all_authors = storage.all(Author).values()
+        if author.get('id', None) is not None:
+            author_to_add = storage.get(Author, author['id'])
+            author_to_add.books.append(new_book)
+            storage.save()
+        else:
+            if author.get('name', None) is None:
+                continue
+            existing_author = next(
+                (auth for auth in all_authors if
+                 auth.fullNames == author['name']),
+                None)
+            if existing_author is not None:
+                author_to_add = storage.get(Author, existing_author.id)
+                author_to_add.books.append(new_book)
+                storage.save()
+            else:
+                author_kw = {'fullNames': author['name']}
+                new_author = Author(**author_kw)
+                new_author.save()
+                new_author.books.append(new_book)
+                storage.save()
+
+    for category in categories:
+        if category.get('id', None) is not None:
+            category_to_add = storage.get(Category, category['id'])
+            category_to_add.books.append(new_book)
+            storage.save()
+        else:
+            if category.get('name', None) is None:
+                continue
+            all_categories = storage.all(Category).values()
+            existing_category = next(
+                (cat for cat in all_categories if
+                 cat.name == category['name']),
+                None)
+            if existing_category is not None:
+                category_to_add = storage.get(Category, existing_category.id)
+                category_to_add.books.append(new_book)
+                storage.save()
+            else:
+                category_kw = {'name': category['name']}
+                new_category = Category(**category_kw)
+                new_category.save()
+                new_category.books.append(new_book)
+                storage.save()
+
+    return {"id": new_book.id}
