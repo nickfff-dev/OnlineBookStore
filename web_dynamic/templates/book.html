@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ book.title }}
+{% endblock %}
+{% block content %}
+    <h1>{{ book.title }}</h1>
+    <div class="book-details">
+        <img src="{{ book['image'] }}" alt="book_image" class="" width="300">
+        <div class="book-info">
+            <!-- <h2>Authors</h2> -->
+            <!-- <ul>
+                {% for author in book.authors %}
+                    <li>{{ author.fullNames }}</li>
+                {% endfor %}
+            </ul> -->
+            <!-- <h2>Publishers</h2>
+            <ul>
+                {% for publisher in book.publishers %}
+                    <li>{{ publisher.name }}</li>
+                {% endfor %}
+            </ul> -->
+            <h2>Price</h2>
+            <p>{{ book.price }}</p>
+            <!-- <h2>Categories</h2>
+            <ul>
+                {% for category in book.categories %}
+                    <li><a href="{{ url_for('category', category_id=category.id) }}">{{ category.name }}</a></li>
+                {% endfor %}
+            </ul> -->
+        </div>
+    </div>
+    <div class="book-description">
+        <h2>Description</h2>
+        <p>{{ book.description }}</p>
+    </div>
+{% endblock %}

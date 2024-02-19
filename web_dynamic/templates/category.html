@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title%}
+    {{ category.name }}
+{% endblock %}
+{% block content %}
+    <h1>{{ category.name }}</h1>
+    <div class="category-books">
+        {% for book in books %}
+            <div class="category-book">
+                <img src="{{ book['image'] }}" alt="book_image" width="300">
+                <h3>{{ book.title }}</h3>
+                <div class="book-authors">
+                    {% for author in book.authors %}
+                        <p>{{ author.fullNames }}</p>
+                    {% endfor %}
+                </div>
+                <div class="book-publishers">
+                    {% for publisher in book.publishers %}
+                        <p>{{ publisher.name }}</p>
+                    {% endfor %}
+                </div>
+                <p>{{ book.price }}</p>
+                <a href="/books/{{ book['id'] }}">View</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
