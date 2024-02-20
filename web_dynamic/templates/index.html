@@ -6,22 +6,19 @@
 
 {% block content %}
 
-<section class="grid grid-flow-col grid-cols-3 w-full">
+<section class="">
     
-    <div>{% include 'components/sidebar.html' %}</div>
-    <div>{% include 'components/hero.html' %}</div>
-    <div>{% include 'components/sidebar.html' %}</div>
+
+    <div class="col-span-2 h-auto">{% include 'components/hero.html' %}</div>
+   
 </section>
 <!-- for each category we render a section with title the name of the category and loop category.books and render the books below it -->
-{% for author in authors %}
-    <section class="authors">
-        <h2>{{ author.fullNames }}</h2>
-    </section>
-{% endfor %}
+<div class="grid grid-flow-row grid-cols-3 gap-x-2">
+    {% for book in books %}
+        <div class="category-book">
+            {% include 'components/bookcard.html' %}
+        </div>
+    {% endfor %}
+</div>
 
-{% for publisher in publishers %}
-    <section class="publisher">
-        <h2>{{ publisher.name }}</h2>
-    </section>
-{% endfor %}
 {% endblock %}

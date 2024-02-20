@@ -1,0 +1,14 @@
+<div class="scrollbar-hide  relative flex flex-col text-gray-700 bg-white shadow-md w-48 max-h-72 overflow-y-auto rounded-xl bg-clip-border">
+    <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+        <h5 class="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+            Authors
+        </h5>
+        {% if authors %}
+            {% for author in authors %}
+                {% include 'components/authors-sidebar-item.html' %}
+            {% endfor %}
+        {% else %}
+            <p>No authors found</p>
+        {% endif %}
+    </nav>
+  </div>

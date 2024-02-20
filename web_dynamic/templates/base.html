@@ -8,13 +8,14 @@
     </head>
     <body>
         <header>
+       
        {% include 'components/header.html' %}
-        <main class="p-2">
+    </header>
+        <main class="p-6">
             {% block content %}
             {% endblock %}
         </main>
-        <footer>
-            <h2>Footer</h2>
-        </footer>
+        <div class="fixed bottom-0 mx-auto bg-white w-full h-12 pb-6" >{% include 'components/footer.html' %}</div>
     </body>
+    
 </html>
