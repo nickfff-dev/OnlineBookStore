@@ -58,7 +58,7 @@ def post_status(order_id):
                     "paid": OrderStatusType.paid,
                     "shipped": OrderStatusType.shipped,
                     "delivered": OrderStatusType.delivered,
-                    "canceled": OrderStatusType.canceled}
+                    "canceled": OrderStatusType.cancelled}
     for item in status_names:
         if data['status'] == item:
             new_status_status = status_names[item]

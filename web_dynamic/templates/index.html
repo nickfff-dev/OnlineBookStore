@@ -11,7 +11,7 @@
         <ul class="categories-sidebar">
             {% if categories %}
                 {% for category in categories %}
-                    <li><a href="/categories/{{ category['id'] }}">{{ category.name }}</a></li>
+                    <li><a href="{{ url_for('bookstore_views.category', category_id=category.id) }}">{{ category.name }}</a></li>
                 {% endfor %}
             {% else %}
                 <li>No categories found</li>
@@ -29,19 +29,9 @@
                     <div class="featured-book">
                         <img src="{{ book['image'] }}" alt="book image" width="300">
                         <h3>{{ book.title }}</h3>
-                        <!-- book.authors is an array -->
-                        <!-- <div class="book-authors">
-                            {% for author in book.authors %}
-                                <p>{{ author.fullNames }}</p>
-                            {% endfor %}
-                        </div>
-                        <div class="book-publishers">
-                            {% for publisher in book.publishers %}
-                                <p>{{ publisher.name }}</p>
-                            {% endfor %}
-                        </div> -->
+                        <p>{{ book.isbn }}</p>
                         <p>{{ book.price }}</p>
-                        <a href="/books/{{ book['id'] }}">View</a>
+                        <a href="{{ url_for('bookstore_views.book', book_id=book.id) }}">View</a>
                     </div>
                 {% endfor %}
             {% else %}
@@ -51,7 +41,7 @@
 </section>
 <!-- for each category we render a section with title the name of the category and loop category.books and render the books below it -->
 {% for author in authors %}
-    <section class="category">
+    <section class="authors">
         <h2>{{ author.fullNames }}</h2>
     </section>
 {% endfor %}

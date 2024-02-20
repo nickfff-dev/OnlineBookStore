@@ -16,6 +16,15 @@ def category(category_id):
     books = []
     for x in categorydata.books:
         book = x.to_dict()
+        authors = []
+        publishers = []
+        for author in x.authors:
+            authors.append(author.to_dict())
+        for publisher in x.publishers:
+            publishers.append(publisher.to_dict())
+        book['authors'] = authors
+        book['publishers'] = publishers
         books.append(book)
+    category['books'] = books
     
-    return render_template('category.html', category=category, books=books)
+    return render_template('category.html', category=category)

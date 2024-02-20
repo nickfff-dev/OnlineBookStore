@@ -8,10 +8,16 @@
     <body>
         <nav>
             <h2>Navigation</h2>
+            <div class="search">
+                <form action="/search" method="GET">
+                    <input type="text" name="query" placeholder="Search">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="/register">Register</a></li>
-                <li><a href="/login">Login</a></li>
+                <li><a href="{{ url_for( 'bookstore_views.register' ) }}">SignUp</a></li>
+                <li><a href="{{ url_for('bookstore_views.login') }}">Login</a></li>
             </ul>
 
         </nav>

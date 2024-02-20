@@ -8,7 +8,7 @@ from models.publisher import Publisher
 from models.author import Author
 from models.category import Category
 from models import storage
-
+import sys
 
 @app_views.route('/books', methods=['GET'],
                  strict_slashes=False)
@@ -25,12 +25,19 @@ def get_books():
                  strict_slashes=False)
 def get_book(book_id):
     """ Retrieves a Book object """
-
+    authors = []
     book = storage.get(Book, book_id)
-
     if book is None:
         abort(404)
-    return jsonify(book.to_dict())
+
+    for author in book.authors:
+        authors.append(author.to_dict())
+    book = book.to_dict()
+    book['authors'] = authors
+
+
+
+    return jsonify(book)
 
 
 @app_views.route('/books/<book_id>', methods=['DELETE'],
@@ -162,7 +169,8 @@ def create_book(data):
         if publisher.get('id', None) is not None:
             publisher_to_add_book = storage.get(Publisher, publisher['id'])
             publisher_to_add_book.books.append(new_book)
-            storage.save()
+
+            
         else:
             if publisher.get('name', None) is None:
                 continue
@@ -174,20 +182,23 @@ def create_book(data):
                 publisher_to_add_book = storage.get(Publisher,
                                                     existing_publisher.id)
                 publisher_to_add_book.books.append(new_book)
-                storage.save()
+
+                
             else:
                 publisher_kw = {'name': publisher_name}
                 new_publisher = Publisher(**publisher_kw)
                 new_publisher.save()
                 new_publisher.books.append(new_book)
-                storage.save()
+
+                
 
     for author in authors:
         all_authors = storage.all(Author).values()
         if author.get('id', None) is not None:
             author_to_add = storage.get(Author, author['id'])
             author_to_add.books.append(new_book)
-            storage.save()
+
+           
         else:
             if author.get('name', None) is None:
                 continue
@@ -198,19 +209,19 @@ def create_book(data):
             if existing_author is not None:
                 author_to_add = storage.get(Author, existing_author.id)
                 author_to_add.books.append(new_book)
-                storage.save()
+               
             else:
                 author_kw = {'fullNames': author['name']}
                 new_author = Author(**author_kw)
                 new_author.save()
                 new_author.books.append(new_book)
-                storage.save()
+
 
     for category in categories:
         if category.get('id', None) is not None:
             category_to_add = storage.get(Category, category['id'])
             category_to_add.books.append(new_book)
-            storage.save()
+
         else:
             if category.get('name', None) is None:
                 continue
@@ -222,12 +233,13 @@ def create_book(data):
             if existing_category is not None:
                 category_to_add = storage.get(Category, existing_category.id)
                 category_to_add.books.append(new_book)
-                storage.save()
+
             else:
                 category_kw = {'name': category['name']}
                 new_category = Category(**category_kw)
                 new_category.save()
                 new_category.books.append(new_book)
-                storage.save()
 
+
+    storage.save()
     return {"id": new_book.id}

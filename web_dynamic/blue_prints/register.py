@@ -21,7 +21,15 @@ def register():
         street = request.form.get('street')
         if not email or not password:
             abort(400, 'Not a JSON')
-        user = User(email=email, password=password)
+        data = {
+            'email': email,
+            'password': password,
+            'firstName': firstName,
+            'lastName': lastName,
+            'zipCode': zipCode,
+            'street': street
+        }
+        user = User(**data)
         user.save()
         return make_response(jsonify(user.to_dict()), 201)
     

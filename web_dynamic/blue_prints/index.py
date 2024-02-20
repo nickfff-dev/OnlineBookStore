@@ -7,6 +7,7 @@ from models.publisher import Publisher
 from models import storage
 from web_dynamic.blue_prints import bookstore_views
 from flask import render_template
+import sys
 
 
 @bookstore_views.route('/', methods=['GET'], strict_slashes=False)

@@ -5,22 +5,24 @@
 {% block content %}
     <h1>{{ category.name }}</h1>
     <div class="category-books">
-        {% for book in books %}
+        {% for book in category.books %}
             <div class="category-book">
                 <img src="{{ book['image'] }}" alt="book_image" width="300">
                 <h3>{{ book.title }}</h3>
-                <div class="book-authors">
+                <h2>Authors</h2>
+                <ul class="book-authors">
                     {% for author in book.authors %}
-                        <p>{{ author.fullNames }}</p>
+                        <li>{{ author.fullNames }}</li>
                     {% endfor %}
-                </div>
-                <div class="book-publishers">
+                </ul>
+                <h2>Publishers</h2>
+                <ul class="book-publishers">
                     {% for publisher in book.publishers %}
-                        <p>{{ publisher.name }}</p>
+                        <li>{{ publisher.name }}</li>
                     {% endfor %}
-                </div>
+                </ul>
                 <p>{{ book.price }}</p>
-                <a href="/books/{{ book['id'] }}">View</a>
+                <a href="{{ url_for('bookstore_views.book', book_id=book.id) }}">View</a>
             </div>
         {% endfor %}
     </div>

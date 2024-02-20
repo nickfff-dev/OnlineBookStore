@@ -61,21 +61,18 @@ def create_book_data(data):
 
 api_url = "http://127.0.0.1:5002/api/v1/books"
 if __name__ == "__main__":
-    with open("final_v3.json", "r") as f:
+    with open("final_v4.json", "r") as f:
         books = json.load(f)
         for book in books:
             book_data = create_book_data(book)
             # Post the book data to the API
             response = requests.post(api_url, json=book_data)
             if response.status_code == 201:
-                print(f"Book with ISBN
-                      {book_data['isbn']} added successfully")
+                print(f"Book with ISBN {book_data['isbn']} added successfully")
             elif response.status_code == 200:
-                print(f"Existing book with ISBN
-                      {book_data['isbn']} updated successfully")
+                print(f"Existing book with ISBN {book_data['isbn']} updated successfully")
             else:
-                print(f"Failed to add book with ISBN {book_data['isbn']}.
-                      Status code: {response.status_code}")
+                print(f"Failed to add book with ISBN {book_data['isbn']}.Status code: {response.status_code}")
                 
 
 
