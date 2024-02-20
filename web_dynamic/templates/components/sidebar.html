@@ -1,0 +1,17 @@
+<div
+    class="relative max-w-2xl flex  overflow-x-hidden overflow-y-auto max-h-96 flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl scrollbar-hide shadow-blue-gray-900/5 noscrollbar">
+    <div class="">
+      <h5 class="block font-sans text-lg antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+        Categories
+      </h5>
+    </div>
+    <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+        {% if categories %}
+            {% for category in categories %}
+                {% include 'components/sidebaritem.html' %}
+            {% endfor %}
+        {% else %}
+            <p>No categories found</p>
+        {% endif %}
+    </nav>
+</div>

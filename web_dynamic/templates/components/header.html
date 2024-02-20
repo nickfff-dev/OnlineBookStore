@@ -1,0 +1,80 @@
+<!-- <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="book_image" class="h-8 w-8">
+      <span class="font-semibold text-xl tracking-tight">OnlineBookStore</span>
+    </div>
+    <div class="block lg:hidden">
+      <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+      </button>
+    </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+      <div class="text-sm lg:flex-grow">
+        <form action="/search" method="GET">
+          <input type="text" name="query" placeholder="Search" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+          <button type="submit" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">Search</button>
+        </form>
+      </div>
+    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+      <div class="text-sm lg:flex-grow">
+        <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+          Home
+        </a>
+        <a href="{{ url_for( 'bookstore_views.register' ) }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
+          Signup
+        </a>
+        <a href="{{ url_for('bookstore_views.login') }}" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
+          Login
+        </a>
+      </div>
+    </div>
+  </nav> -->
+
+  <nav
+  class="sticky block w-full  px-4 py-2 mx-auto text-white bg-green-600 border shadow-md  border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4">
+  <div class="container flex flex-wrap items-center justify-between mx-auto text-blue-gray-900">
+    <a href="#"
+      class="mr-4 block cursor-pointer py-1.5 font-sans text-base font-medium leading-relaxed text-inherit antialiased">
+      OnlineBookStore
+    </a>
+    <div class="items-center hidden gap-x-2 lg:flex">
+     
+        <div class="border rounded overflow-hidden flex">
+            <input type="text" class="px-4 py-1" placeholder="Search...">
+            <button class="flex items-center justify-center px-4 border-l">
+              <svg class="h-42 w-4 text-grey-dark" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z"/></svg>
+            </button>
+          </div>
+        
+
+    </div>
+    <div class="hidden lg:block">
+      <ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+        <li
+          class="flex items-center p-1 font-sans text-sm antialiased font-medium leading-normal gap-x-2 text-blue-gray-900">
+    
+          <a href="/" class="flex items-center">
+            Home
+          </a>
+        </li>
+        <li
+          class="flex items-center p-1 font-sans text-sm antialiased font-medium leading-normal gap-x-2 text-blue-gray-900">
+
+          <a href="{{ url_for('bookstore_views.login') }}" class="flex items-center">
+            Login
+          </a>
+        </li>
+        <li
+          class="flex items-center p-1 font-sans text-sm antialiased font-medium leading-normal gap-x-2 text-blue-gray-900">
+
+          <a href="{{ url_for( 'bookstore_views.register' ) }}"  class="flex items-center">
+            Signup
+          </a>
+        </li>
+ 
+      </ul>
+    </div>
+
+
+  </div>
+</nav>

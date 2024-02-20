@@ -5,39 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Landing</h1>
-    <section class="hero">
-    <div class="categories-sidebar-container">
-        <ul class="categories-sidebar">
-            {% if categories %}
-                {% for category in categories %}
-                    <li><a href="{{ url_for('bookstore_views.category', category_id=category.id) }}">{{ category.name }}</a></li>
-                {% endfor %}
-            {% else %}
-                <li>No categories found</li>
-            {% endif %}
-        </ul>  
-    </div>
-    <!-- <div class="hero-image-container">
-        <img src="{{ url_for('static', filename='images/hero.jpg') }}" alt="hero image">
-    </div> -->
-    <div class="featured-container">
-        <h2>Featured Books</h2>
-        <div class="featured-books">
-            {% if books %}
-                {% for book in books %}
-                    <div class="featured-book">
-                        <img src="{{ book['image'] }}" alt="book image" width="300">
-                        <h3>{{ book.title }}</h3>
-                        <p>{{ book.isbn }}</p>
-                        <p>{{ book.price }}</p>
-                        <a href="{{ url_for('bookstore_views.book', book_id=book.id) }}">View</a>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No books found</p>
-            {% endif %}
-    </div>
+
+<section class="grid grid-flow-col grid-cols-3 w-full">
+    
+    <div>{% include 'components/sidebar.html' %}</div>
+    <div>{% include 'components/hero.html' %}</div>
+    <div>{% include 'components/sidebar.html' %}</div>
 </section>
 <!-- for each category we render a section with title the name of the category and loop category.books and render the books below it -->
 {% for author in authors %}

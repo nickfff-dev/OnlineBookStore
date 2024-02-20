@@ -3,25 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/globals.css') }}">
     <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-        <nav>
-            <h2>Navigation</h2>
-            <div class="search">
-                <form action="/search" method="GET">
-                    <input type="text" name="query" placeholder="Search">
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="{{ url_for( 'bookstore_views.register' ) }}">SignUp</a></li>
-                <li><a href="{{ url_for('bookstore_views.login') }}">Login</a></li>
-            </ul>
-
-        </nav>
-        <main>
+        <header>
+       {% include 'components/header.html' %}
+        <main class="p-2">
             {% block content %}
             {% endblock %}
         </main>
