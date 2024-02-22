@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title%}
+     about
+{% endblock %}
+{% block content %}
+    <div class="bg-teal-700 py-2"><h1 class="font-bold text-center text-white">About</h1></div>
+    <div class="about-content">
+        <p
+        class="mt-6 text-lg leading-8 text-gray-700"
+        >Bookstore is a web application that allows users to view and purchase books. It is built using Flask, a Python web framework, and Tailwind CSS, a utility-first CSS framework. The application is built using the Model-View-Controller (MVC) architecture. The application has the following features:</p>
+        <ul
+        class="mt-6 text-lg leading-8 text-gray-700"
+        >
+            <li
+            class="mt-6 text-lg leading-8 text-gray-700"
+            >Users can view books by category</li>
+            <li>Users can view book details</li>
+            <li>Users can register and login</li>
+            <li>Users can add books to their cart</li>
+            <li>Users can view their cart</li>
+            <li>Users can checkout</li>
+        </ul>
+    </div>
+{% endblock %}

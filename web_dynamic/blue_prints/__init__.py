@@ -15,3 +15,5 @@ from web_dynamic.blue_prints.book import *
 from web_dynamic.blue_prints.category import *
 from web_dynamic.blue_prints.login import *
 from web_dynamic.blue_prints.register import *
+from web_dynamic.blue_prints.landing import *
+from web_dynamic.blue_prints.about import *
