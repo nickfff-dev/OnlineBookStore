@@ -4,7 +4,8 @@ from models.user import User
 from models import storage
 from web_dynamic.blue_prints import bookstore_views
 from flask import render_template
-from flask import request, jsonify, make_response, abort
+from flask import request, jsonify, make_response, abort, session, redirect, url_for
+from werkzeug.security import  check_password_hash
 
 
 @bookstore_views.route('/login', methods=['GET','POST'], strict_slashes=False)
@@ -19,7 +20,9 @@ def login():
     if not email or not password:
         abort(400, 'Not a JSON')
     users = storage.all(User).values()
-    user = next((user for user in users if user.email == email and user.password == password), None)
+    user = next((user for user in users if user.email == email and check_password_hash(user.password, password)), None)
     if not user:
         abort(404)
-    return make_response(jsonify(user.to_dict()), 200)
+    session.clear()
+    session['user_id'] = user.id
+    return redirect(url_for('bookstore_views.index'))

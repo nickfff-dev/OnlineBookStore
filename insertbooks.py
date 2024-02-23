@@ -61,7 +61,7 @@ def create_book_data(data):
 
 api_url = "http://127.0.0.1:5002/api/v1/books"
 if __name__ == "__main__":
-    with open("final_v4.json", "r") as f:
+    with open("final_v3.json", "r") as f:
         books = json.load(f)
         for book in books:
             book_data = create_book_data(book)
@@ -73,18 +73,4 @@ if __name__ == "__main__":
                 print(f"Existing book with ISBN {book_data['isbn']} updated successfully")
             else:
                 print(f"Failed to add book with ISBN {book_data['isbn']}.Status code: {response.status_code}")
-                
 
-
-
-
-# export ONBST_MYSQL_USER='storedbadmin'
-# export ONBST_MYSQL_PWD='bookdb-pwd-8732'
-# export ONBST_MYSQL_HOST='localhost'
-# export ONBST_MYSQL_DB='OnlineBookStore'
-# export ONBST_MYSQL_PORT=3306
-# export ONBST_API_HOST=0.0.0.0
-# export ONBST_API_PORT=5002
-# export ONBST_TEST_USER='storedbadmintest'
-# export ONBST_TEST_PWD='bookdb-test-pwd-8732'
-# export ONBST_TEST_DB='OnlineBookStoretest'

@@ -12,7 +12,7 @@ class User(BaseModel, Base):
     firstName = Column(String(128), nullable=True)
     lastName = Column(String(128), nullable=True)
     email = Column(String(128), unique=True, nullable=False)
-    password = Column(String(128), nullable=False)
+    password = Column(String(1024), nullable=False)
     zipCode = Column(String(128), nullable=True)
     street = Column(String(128), nullable=True)
     orders = relationship('Order', backref='user',

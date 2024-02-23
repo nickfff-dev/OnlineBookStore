@@ -66,6 +66,8 @@ class BaseModel:
             dictionary['updated_at'] = dictionary['updated_at'].isoformat()
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
+        if 'password' in dictionary:
+            del dictionary['password']
         return dictionary
 
     def delete(self):

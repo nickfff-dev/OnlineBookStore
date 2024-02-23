@@ -4,8 +4,9 @@ from models.user import User
 from models import storage
 from web_dynamic.blue_prints import bookstore_views
 from flask import render_template
-from flask import request, jsonify, make_response, abort
-
+from flask import request, jsonify, make_response, abort, redirect, url_for
+from werkzeug.security import generate_password_hash
+import sys
 
 
 
@@ -19,11 +20,11 @@ def register():
         lastName = request.form.get('lastName')
         zipCode = request.form.get('zipCode')
         street = request.form.get('street')
-        if not email or not password:
-            abort(400, 'Not a JSON')
+        if not email or not password or not firstName or not lastName:
+            abort(400, 'Missing parameters')
         data = {
             'email': email,
-            'password': password,
+            'password': generate_password_hash(password, method='scrypt', salt_length=8),
             'firstName': firstName,
             'lastName': lastName,
             'zipCode': zipCode,
@@ -31,7 +32,7 @@ def register():
         }
         user = User(**data)
         user.save()
-        return make_response(jsonify(user.to_dict()), 201)
+        print(user.email, user.password,  file=sys.stderr)
+        return redirect(url_for('bookstore_views.login'))
     
     return render_template('register.html')
-

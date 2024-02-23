@@ -7,6 +7,7 @@ from models import storage
 from os import environ
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'bookstore_secret'
 app.register_blueprint(bookstore_views)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
