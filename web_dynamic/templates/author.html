@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title%}
+{{ author.fullNames }}
+{% endblock %}
+{% block content %}
+<div class="bg-teal-700 py-2"><h1 class="font-bold text-center text-white">{{ author.fullNames }}</h1></div>
+<span class="font-bold text-gray-700 dark:text-gray-300">Names: </span>
+<span class="mt-6 text-lg leading-8 text-gray-700"> {{ author.fullNames }}</span>
+<span class="font-bold text-gray-700 dark:text-gray-300 text-lg">Books:</span>
+<div class="author-books grid grid-flow-row grid-cols-2 gap-x-2">
+    {% for book in author.books %}
+        <div class="author-book">
+            {% include 'components/bookcard.html' %}
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

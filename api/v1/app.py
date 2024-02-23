@@ -28,5 +28,5 @@ def not_found(error):
 if __name__ == "__main__":
     """ Main Function """
     host = environ.get('ONBST_API_HOST', '0.0.0.0')
-    port = environ.get('ONBST_API_PORT', '5002')
+    port = environ.get('ONBST_API_PORT', '5008')
     app.run(host=host, port=port, threaded=True, debug=True)

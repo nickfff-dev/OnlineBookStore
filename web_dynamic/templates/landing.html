@@ -2,28 +2,49 @@
 {% block title%}
      landing page
 {% endblock %}
-{% block content %}
-<div class="bg-black bg-[url('/static/images/landing.webp')] bg-no-repeat bg-cover bg-center">
-    <div class="relative isolate px-6 pt-14 lg:px-8">
-    
-      <div class="mx-auto max-w-2xl py-12 sm:py-14 lg:py-16">
-
-        <div class="text-center">
-          <h1 class="text-4xl font-bold tracking-tight text-green-600 sm:text-6xl">
-            Online Book Store
-        </h1>
-        <div class="bg-green-200 p-4 rounded">
-          <p class="mt-6 text-lg leading-8 text-gray-700">I present to you the Online Book Store from where users can register and browse through a rich cata log of books
-            which they can purchase and have them delivered to their doorsteps.
-          </p>
-        </div>
-          <div class="mt-10 flex items-center justify-center gap-x-6">
-            <a href="/" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
-            <a href="/about" class="text-sm font-semibold leading-6 text-green-300">Learn more <span aria-hidden="true">→</span></a>
+  {% block content %}
+  <div class="bg-black bg-[url('https://source.unsplash.com/random/?bookstore,bookshop')] bg-no-repeat bg-cover bg-center">
+      <div class="relative isolate px-6 pt-14 lg:px-8">
+  
+        <div class="mx-auto max-w-2xl py-12 sm:py-14 lg:py-16">
+  
+          <div class="text-center">
+            <h1 class="text-4xl font-bold tracking-tight text-green-600 sm:text-6xl">
+              Online Book Store
+          </h1>
+          <div class="bg-green-200 p-4 rounded">
+            <p class="mt-6 text-lg leading-8 text-gray-700">I present to you the Online Book Store from where users can register and browse through a rich cata log of books
+              which they can purchase and have them delivered to their doorsteps.
+            </p>
+          </div>
+            <div class="mt-10 flex items-center justify-center gap-x-6">
+              <a href="/bookstore" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
+              <a href="/bookstore/about" class="text-sm font-semibold leading-6 text-green-300">Learn more <span aria-hidden="true">→</span></a>
+            </div>
           </div>
         </div>
+  
       </div>
-     
     </div>
-  </div> 
-  {% endblock %}
+  
+    <div class="bg-teal-700 py-2"><h1 class="font-bold text-center text-white">About</h1></div>
+      <div class="about-content">
+          <p
+          class="mt-6 text-lg leading-8 text-gray-700"
+          >Bookstore is a web application that allows users to view and purchase books. It is built using Flask, a Python web framework, and Tailwind CSS, a utility-first CSS framework. The application is built using the Model-View-Controller (MVC) architecture. The application has the following features:</p>
+          <ul
+          class="mt-6 text-lg leading-8 text-gray-700"
+          >
+   <div class="bg-teal-700 py-2">       <h1 class="font-bold text-center text-white">Features</h1></div>
+          <li
+              class="mt-6 text-lg leading-8 text-gray-700"
+              >Users can view books by category</li>
+              <li>Users can view book details</li>
+              <li>Users can register and login</li>
+              <li>Users can add books to their cart</li>
+              <li>Users can view their cart</li>
+              <li>Users can checkout</li>
+          </ul>
+      </div>
+{% endblock %}
+  

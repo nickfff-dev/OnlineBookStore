@@ -14,5 +14,7 @@ def author(author_id):
     authordata = storage.get(Author, author_id)
     if authordata is None:
         abort(404)
+    books = [ book.to_dict() for book in authordata.books ]
     author = authordata.to_dict()
+    author['books'] = books
     return render_template('author.html', author=author)

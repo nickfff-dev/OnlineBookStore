@@ -26,5 +26,5 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     host = environ.get('ONBST_API_HOST', '0.0.0.0')
-    port = environ.get('ONBST_WEB_PORT', '3000')
+    port = environ.get('ONBST_WEB_PORT', '5006')
     app.run(host=host, port=port, threaded=True, debug=True)
