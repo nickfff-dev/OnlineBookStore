@@ -18,6 +18,7 @@ def close_session(self):
     storage.close()
 
 
+
 @app.errorhandler(404)
 def page_not_found(e):
     """ Handles 404 errors """

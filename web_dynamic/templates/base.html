@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/globals.css') }}">
+    
     <title>{% block title %}{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
     </head>
     <body>
         <header>
        
        {% include 'components/header.html' %}
     </header>
-        <main class="p-6">
+        <main class="p-6 mb-6 mt-20">
             {% block content %}
             {% endblock %}
         </main>
         <div class="fixed bottom-0 mx-auto bg-white w-full h-12 pb-6" >{% include 'components/footer.html' %}</div>
+
     </body>
     
 </html>

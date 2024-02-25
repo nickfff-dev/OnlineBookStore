@@ -1,6 +1,6 @@
 
   <nav
-  class="sticky top-0 z-50 block w-full  px-4 py-2 mx-auto text-white bg-green-600 border shadow-md  border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4">
+  class="fixed top-0 z-50  w-full  px-4 py-2 mx-auto text-white bg-green-600 border shadow-md  border-white/80 bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200 lg:px-8 lg:py-4">
   <div class="container flex flex-wrap items-center justify-between mx-auto text-blue-gray-900">
     <a href="/bookstore"
       class="mr-4 block cursor-pointer py-1.5 font-sans text-base font-medium leading-relaxed text-inherit antialiased">
@@ -25,6 +25,15 @@
     
           <a href="/bookstore" class="flex items-center">
             Home
+          </a>
+        </li>
+        <li
+          class="flex items-center p-1 font-sans text-sm antialiased font-medium leading-normal gap-x-2 text-blue-gray-900">
+    
+          <a href="{{ url_for('bookstore_views.cart') }}" class="flex items-center text-lg">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+            </svg><sup class="font-bold">{{ g.cart|length }}</sup>
           </a>
         </li>
         <li

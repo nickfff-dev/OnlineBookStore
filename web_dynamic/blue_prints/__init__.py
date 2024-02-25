@@ -13,7 +13,8 @@ def load_logged_in_user():
         user = storage.get(User, session['user_id'])
         if user:
             g.user = user.to_dict()
-            print(g.user, file=sys.stderr)
+            if session.get('orderlines', None) is not None:
+                g.cart = session['orderlines']
         else:
             g.user = None
     else:
@@ -34,3 +35,6 @@ from web_dynamic.blue_prints.landing import *
 from web_dynamic.blue_prints.about import *
 from web_dynamic.blue_prints.account import *
 from web_dynamic.blue_prints.logout import *
+from web_dynamic.blue_prints.cart import *
+from web_dynamic.blue_prints.orderline import *
+from web_dynamic.blue_prints.update_cart import *
