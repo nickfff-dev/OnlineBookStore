@@ -13,7 +13,6 @@ def update_cart(book_id):
         if session.get('orderlines', None) is not None:
             if book_id in session['orderlines']:
                 session['orderlines'].pop(book_id, None)
-                g.cart = session['orderlines']
                 session.modified = True
                 g.cart = session['orderlines']
                 return redirect('/bookstore/cart')
@@ -38,7 +37,6 @@ def update_cart(book_id):
         }
 
         session['orderlines'][book_id] = order_line[book_id]
-        g.cart = session['orderlines']
         session.modified = True
-        return redirect('/bookstore/cart')
-
+        g.cart = session['orderlines']
+        return redirect('/bookstore/cart', code=302)

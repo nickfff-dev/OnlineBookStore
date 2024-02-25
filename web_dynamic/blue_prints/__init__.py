@@ -38,3 +38,4 @@ from web_dynamic.blue_prints.logout import *
 from web_dynamic.blue_prints.cart import *
 from web_dynamic.blue_prints.orderline import *
 from web_dynamic.blue_prints.update_cart import *
+from web_dynamic.blue_prints.checkout import *

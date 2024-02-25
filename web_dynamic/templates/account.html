@@ -5,13 +5,13 @@
 {% endblock %}
 {% block content %}
 
-<div class="bg-gray-100">
+<div class="bg-gray-100  h-auto">
 
     <!-- End of Navbar -->
 
     <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2 ">
-            <div class="w-full md:w-9/12 mx-2 lg:h-64">
+            <div class="w-full mx-auto md:w-9/12 mx-2 lg:h-64">
                 <div class="bg-white p-3 shadow-sm rounded-sm">
                     <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
                         <span clas="text-green-500">
@@ -70,15 +70,36 @@
                                             d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                 </span>
+
                                 <span class="tracking-wide">Orders</span>
                             </div>
-                            <ul class="list-inside space-y-2">
-                                <li>
-                                    <div class="text-teal-600">Owner at Her Company Inc.</div>
-                                    <div class="text-gray-500 text-xs">March 2020 - Now</div>
+<div class="max-h-96 overflow-y-auto">
+                            {% for order in orders %}
+                            <ul class="list-inside  border-b-3 border-t-3">
+                               <span class="font-bold"> Order_Id: </span> <span>{{ order.id }}</span>
+                               <span class="px-6 font-bold"> Order_Date: </span> <span>{{ order.created_at }}</span>
+                                {% for orderline in order.orderlines %}
+                                <li class="grid grid-cols-6 gap-6 mb-6 mt-2">
+                                    <div class="col-span-1 self-center">
+                                        <img src="{{ orderline.book.image }}" alt="Product" class="rounded w-24">
+                                    </div>
+                                    <div class="flex flex-col col-span-2 ">
+                                        <span class="text-gray-600 text-md font-semi-bold">{{orderline.book.title}}</span>
+                                        <span class="text-gray-400 text-sm inline-block pt-2">{{ orderline.book.edition }}</span>
+                                    </div>
+                                    <div class="col-span-2 ">
+                                        <div class="flex items-center space-x-2 text-sm justify-between">
+                                            <span class="text-gray-400">{{orderline.quantity}} x {{orderline.unit_sale_price}}</span>
+                                            <span class="text-pink-400 font-semibold inline-block">{{orderline.sub_total}}</span>
+                                        </div>
+                                    </div>
+                                    
                                 </li>
                                 
                             </ul>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
                         </div>
 
                     </div>

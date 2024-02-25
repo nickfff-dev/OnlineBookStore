@@ -33,4 +33,4 @@ def orderline():
         session['orderlines'].update(order_line)
         g.cart = session['orderlines']
         session.modified = True
-        return redirect('/bookstore')
+        return f'<sup id="cartlength" class="font-bold">{str(len(g.cart))}</sup>'

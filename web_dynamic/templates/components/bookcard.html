@@ -5,8 +5,7 @@
   
       </div>
     </a>
-
-      <div class="mt-1 flex flex-col justify-between">
+      <div  class="mt-1 flex flex-col justify-between">
         <a href="{{ url_for('bookstore_views.book', book_id=book.id) }}">
         <h2 class="text-slate-700 m-0">{{book.title}}</h2>
         <p class="mt-1 text-sm text-slate-400">{{book.edition}}</p>
@@ -32,3 +31,15 @@
     
   </article>
 </div>
+<script>
+  $("#bcard_{{ book.id }}").on('submit', function(event){
+    event.preventDefault();
+    let form = $(this);
+    let url = form.attr('action');
+    let data = form.serialize();
+    $.post(url, data, function(response){
+      console.log(response);
+      $('#summary').load(location.href + ' #cartlength');
+    });
+  });
+</script>

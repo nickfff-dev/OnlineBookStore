@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 """ The flask application """
-from flask import Flask, render_template, make_response, jsonify
+from flask import Flask, render_template, make_response, jsonify,session
 from flask_cors import CORS
 from web_dynamic.blue_prints import bookstore_views
 from models import storage
 from os import environ
-
+import sys
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'bookstore_secret'
 app.register_blueprint(bookstore_views)
 CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 
 @app.teardown_appcontext
