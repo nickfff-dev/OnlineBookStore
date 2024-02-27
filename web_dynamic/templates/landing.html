@@ -3,48 +3,100 @@
      landing page
 {% endblock %}
   {% block content %}
-  <div class="bg-black bg-[url('https://source.unsplash.com/random/?bookstore,bookshop')] bg-no-repeat bg-cover bg-center">
-      <div class="relative isolate px-6 pt-14 lg:px-8">
-  
-        <div class="mx-auto max-w-2xl py-12 sm:py-14 lg:py-16">
-  
-          <div class="text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-green-600 sm:text-6xl">
-              Online Book Store
-          </h1>
-          <div class="bg-green-200 p-4 rounded">
-            <p class="mt-6 text-lg leading-8 text-gray-700">I present to you the Online Book Store from where users can register and browse through a rich cata log of books
-              which they can purchase and have them delivered to their doorsteps.
-            </p>
-          </div>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a href="/bookstore" class="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get started</a>
-              <a href="/bookstore/about" class="text-sm font-semibold leading-6 text-green-300">Learn more <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
+
+  <section class="bg-white dark:bg-gray-900">
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+        <div class="mr-auto place-self-center lg:col-span-7">
+            <h1 class="max-w-2xl mb-4 text-4xl font-extrabold leading-none md:text-5xl xl:text-6xl dark:text-white">The Online Book Store</h1>
+            <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">I present to you the Online Book Store from where users can register and browse through a rich catalog of books
+              which they can purchase and have them delivered to their doorsteps.</p>
+            <a href="/bookstore" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-teal-700 hover:bg-teal-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                Get started
+                <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+            </a>
+            <a href="/bookstore/about" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                Explore
+            </a> 
         </div>
-  
-      </div>
+        <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+            <img src="{{ url_for('static', filename='images/landing.jpg') }}" alt="landing">
+        </div>                
     </div>
-  
-    <div class="bg-teal-700 py-2"><h1 class="font-bold text-center text-white">About</h1></div>
-      <div class="about-content">
-          <p
-          class="mt-6 text-lg leading-8 text-gray-700"
-          >Bookstore is a web application that allows users to view and purchase books. It is built using Flask, a Python web framework, and Tailwind CSS, a utility-first CSS framework. The application is built using the Model-View-Controller (MVC) architecture. The application has the following features:</p>
-          <ul
-          class="mt-6 text-lg leading-8 text-gray-700"
-          >
-   <div class="bg-teal-700 py-2">       <h1 class="font-bold text-center text-white">Features</h1></div>
-          <li
-              class="mt-6 text-lg leading-8 text-gray-700"
-              >Users can view books by category</li>
-              <li>Users can view book details</li>
-              <li>Users can register and login</li>
-              <li>Users can add books to their cart</li>
-              <li>Users can view their cart</li>
-              <li>Users can checkout</li>
-          </ul>
+</section>
+<section class="bg-gray-50 dark:bg-gray-900 dark:bg-gray-800">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+      <div class="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
+          <h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">The application has the following features: 
+            <ul
+            class="mt-6 text-lg leading-8 text-gray-700 list-disc list-inside"
+            >
+            <li class="mt-6 flex  gap-x-6 text-lg leading-8 text-gray-700">
+              <div>   
+                <h1>Authentication and registration</h1>
+                <p>Users can register and login</p>
+                <p>Users can view their profile</p>
+              </div>
+   
+            <!-- video element previewing the feature -->
+            <video class="w-96 rounded-lg" controls>
+              <source src="{{ url_for('static', filename='images/signupandlogin.webm') }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+
+            </li>
+     
+            <li class="mt-6 flex justify-center gap-x-6  text-lg leading-8 text-gray-700">
+              <div>  
+                <h1>Explore</h1>
+                <p>Users can view books by category</p>
+                <p>Users can view book details</p>
+              </div>
+              
+
+                        <video class="w-96 rounded-lg" controls>
+              <source src="{{ url_for('static', filename='images/browsebooks.webm') }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+              </li>
+        
+
+                <li class="mt-6 flex gap-x-6 text-lg leading-8 text-gray-700">
+                  <div>  <h1>Users can shop</h1>
+                  
+                    <p>Users can add books to their cart</p>
+                    <p>Users can view their cart</p>
+                    <p>Users can checkout</p>
+                    <p>Users can view their order history</p></div>
+                  <video class="w-96 rounded-lg" controls>
+                    <source src="{{ url_for('static', filename='images/viewandshop.webm') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+
+              </li>
+            </ul>
       </div>
+  </div>
+</section>
+<section class="bg-white dark:bg-gray-900">
+  <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+      <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+          <h2 class="mb-4 text-4xl font-extrabold text-gray-900 dark:text-white">About</h2>
+          <p class="mb-4">OnlineBookStore is a web application that allows users to view and purchase books. It is built using Flask, a Python web framework, and Tailwind CSS, a utility-first CSS framework. The application was solely built by <a class="underline font-bold text-teal-700" href="https://github.com/nickfff-dev">Nickson</a> as fullfilment of the alx software engineering course project The application is built using the Model-View-Controller (MVC) architecture</p>
+          <p class="m-b4">I embarked on a journey that would not only challenge me but also transform my perspective on technology and its potential to connect people. My fascination with the digital world had always been there, but this timeround, I decided to take a leap of faith and dive headfirst into the world of books. The idea was to create something that could bridge the gap between people and their favorite books, making the process of discovering, purchasing, and sharing books more accessible and enjoyable.</p>
+          <p class="mb-4">The inspiration for this project came from a simple yet profound realization: books are the cornerstone of knowledge and creativity, yet they often remain hidden behind the walls of libraries or bookstores. The idea was to create an online platform where books could be discovered, purchased, and shared with ease, fostering a community of readers and book lovers.</p>
+          <p class="mb-4">The timeline of this project was filled with ups and downs, but each challenge was a stepping stone towards realizing my vision</p>
+          <p class="mb-4">Throughout the development process, I was constantly reminded of the power of community and collaboration. The open-source community, in particular, was a beacon of support and knowledge. I found myself contributing to various projects, not just to improve my skills but also to give back to the community that had given me so much.</p>
+          <p class="mb-4">As the project neared completion, I realized that this was not just a project; it was a portfolio of my skills, my passion, and my commitment to making a difference. The Online Book Store was more than just a website; it was a testament to the power of technology to connect people, to inspire, and to create a community.</p>
+          <p class="mb-4">Looking back, I am filled with gratitude for the journey that led me here. The Online Book Store is not just a project; it's a reflection of my growth, my passion for technology, and my desire to make a positive impact on the world. It's a testament to the fact that with dedication, creativity, and a bit of code, we can create something truly meaningful.</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mt-8">
+          <img class="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1">
+          <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2">
+      </div>
+  </div>
+</section>
+
+
+
 {% endblock %}
   

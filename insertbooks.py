@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-    This module defines a function that create book data from request data
+    This module defines a function that creates book data from request data
     data contains another key 'publisher' that has keys 'id'
     and optionally 'name'. if 'name' is present,
     we need to create a new publisher
@@ -23,9 +23,7 @@ def create_book_data(data):
     image = data.get('image-url', None)
     isbn = data.get('isbn', None)
     price = data.get('price', None)
-    print(price)
-    numberOfPages = data.get('num_pages'),
-    print(numberOfPages[0])
+    numberOfPages = data.get('num_pages', None)
     publishDate = data.get('publish_date', None)
     publishers = [
         {
